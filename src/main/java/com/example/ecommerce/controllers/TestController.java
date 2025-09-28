@@ -15,7 +15,7 @@ public class TestController {
     public Object test(){
 
         Map<String, Object> data = new HashMap<>();
-        data.put("ansar", 1);
+        data.put("test", 1);
         return data;
     }
 }
