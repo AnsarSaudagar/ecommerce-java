@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        return user;
+
         return userRepository.save(user);
     }
 }
