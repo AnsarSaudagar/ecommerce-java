@@ -4,6 +4,7 @@ import com.example.ecommerce.dto.ProductCategoryDto;
 import com.example.ecommerce.repository.ProductCategoryRepository;
 import com.example.ecommerce.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +16,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     ProductCategoryRepository productCategoryRepository;
 
     @Override
+    @Cacheable("product-categories")
     public List<ProductCategoryDto> getAllCategories() {
-
+        System.out.println("Getting Categories.......");
         return productCategoryRepository.findAll().stream()
                 .map(pc -> new ProductCategoryDto(
                         pc.getId(),

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/product-category")
+@RequestMapping("/admin/product-categories")
 public class ProductCategoryController {
 
     @Autowired
