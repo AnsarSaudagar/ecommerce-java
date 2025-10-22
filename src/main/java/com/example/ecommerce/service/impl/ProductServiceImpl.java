@@ -22,7 +22,8 @@ public class ProductServiceImpl implements ProductService {
                         p.getName(),
                         p.getPrice(),
                         p.getDescription(),
-                        p.getImage()
+                        p.getImage(),
+                        p.getProductCategory().getName()
                 ))
                 .toList();
     }

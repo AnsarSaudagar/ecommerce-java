@@ -1,5 +1,6 @@
 package com.example.ecommerce.dto;
 
+import com.example.ecommerce.entity.ProductCategory;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
@@ -14,4 +15,5 @@ public class AdminProductDto {
     private BigDecimal price;
     private String description;
     private String image;
+    private String categoryName;
 }
