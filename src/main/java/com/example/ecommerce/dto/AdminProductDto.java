@@ -16,4 +16,5 @@ public class AdminProductDto {
     private String description;
     private String image;
     private String categoryName;
+    private Long categoryId;
 }

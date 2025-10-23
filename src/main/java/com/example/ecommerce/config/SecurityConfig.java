@@ -27,7 +27,6 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowCredentials(true);
-        // Add multiple frontend URLs
         config.setAllowedOrigins(List.of(
                 "http://localhost:4201",
                 "http://localhost:4200",
