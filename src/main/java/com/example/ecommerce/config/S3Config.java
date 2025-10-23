@@ -1,5 +1,7 @@
 package com.example.ecommerce.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -9,13 +11,11 @@ import software.amazon.awssdk.services.s3.S3Client;
 @Configuration
 public class S3Config {
 
-    private final AwsProperties awsProperties;
+    @Autowired
+    private AwsProperties awsProperties;
 
-    public S3Config(AwsProperties awsProperties) {
-        this.awsProperties = awsProperties;
-    }
-
-    private S3Client s3Client(){
+    @Bean
+    public S3Client s3Client(){
         AwsBasicCredentials awsBasicCredentials = AwsBasicCredentials.create(
                 awsProperties.getAccessKey(),
                 awsProperties.getSecretKey()

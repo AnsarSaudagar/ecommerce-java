@@ -5,6 +5,7 @@ import com.example.ecommerce.service.S3Service;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import software.amazon.awssdk.core.ResponseBytes;
 import software.amazon.awssdk.core.sync.RequestBody;
@@ -13,6 +14,7 @@ import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.IOException;
 
+@Service
 public class S3ServiceImpl implements S3Service {
 
     private final S3Client s3Client;
@@ -55,6 +57,7 @@ public class S3ServiceImpl implements S3Service {
     @Override
     public ResponseEntity<byte[]> downloadFile(String fileKey) {
         try {
+            System.out.println("HEllooooo"+ awsProperties.getS3Bucket());
             GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                     .bucket(awsProperties.getS3Bucket())
                     .key(fileKey)
