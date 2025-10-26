@@ -28,7 +28,8 @@ public class ProductCategoryController {
     }
 
     @PostMapping(value = "add-product-category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addProduct(@RequestBody CreateProductCategoryDTO createProductCategoryDTO){
+    public ResponseEntity<?> addProduct(@ModelAttribute CreateProductCategoryDTO createProductCategoryDTO){
         return ResponseEntity.ok(productCategoryService.createNewCategory(createProductCategoryDTO));
+
     }
 }

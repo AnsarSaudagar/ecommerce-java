@@ -8,6 +8,8 @@ import com.example.ecommerce.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @Service
@@ -15,6 +17,9 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
     @Autowired
     ProductCategoryRepository productCategoryRepository;
+
+    @Autowired
+    S3ServiceImpl s3Service;
 
     @Override
     @Cacheable("product-categories")
@@ -40,7 +45,23 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     }
 
     @Override
-    public Object createNewCategory(CreateProductCategoryDTO createProductCategoryDTO) {
-        return createProductCategoryDTO;
+    public ProductCategoryDto createNewCategory(CreateProductCategoryDTO createProductCategoryDTO) {
+
+        ProductCategory productCategory = new ProductCategory();
+        MultipartFile file = createProductCategoryDTO.getImage();
+        String fileName = file.getOriginalFilename();
+        s3Service.uploadFile(file, fileName);
+
+        productCategory.setName(createProductCategoryDTO.getName());
+        productCategory.setImage(fileName);
+
+        ProductCategory newProductCategory = productCategoryRepository.save(productCategory);
+
+
+        return new ProductCategoryDto(
+                newProductCategory.getId(),
+                newProductCategory.getName(),
+                newProductCategory.getImage()
+        );
     }
 }

@@ -31,8 +31,7 @@ public class S3ServiceImpl implements S3Service {
         try{
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(awsProperties.getS3Bucket())
-                    .key(filePath)
-                    .acl(ObjectCannedACL.PUBLIC_READ)
+                    .key("category-images/" + filePath)
                     .contentType(file.getContentType())
                     .build();
 
