@@ -28,8 +28,12 @@ public class ProductCategoryController {
     }
 
     @PostMapping(value = "add-product-category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addProduct(@ModelAttribute CreateProductCategoryDTO createProductCategoryDTO){
+    public ResponseEntity<?> addCategory(@ModelAttribute CreateProductCategoryDTO createProductCategoryDTO){
         return ResponseEntity.ok(productCategoryService.createNewCategory(createProductCategoryDTO));
+    }
 
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Boolean> deleteCategory(@PathVariable Long id){
+        return ResponseEntity.ok(productCategoryService.deleteCategory(id));
     }
 }

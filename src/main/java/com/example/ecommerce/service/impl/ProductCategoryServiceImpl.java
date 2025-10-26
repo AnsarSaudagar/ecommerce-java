@@ -15,6 +15,7 @@ import java.util.List;
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService {
 
+    private final String BUCKET_PATH = "category-images/";
     @Autowired
     ProductCategoryRepository productCategoryRepository;
 
@@ -22,7 +23,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     S3ServiceImpl s3Service;
 
     @Override
-    @Cacheable("product-categories")
+//    @Cacheable("product-categories")
     public List<ProductCategoryDto> getAllCategories() {
         return productCategoryRepository.findAll().stream()
                 .map(pc -> new ProductCategoryDto(
@@ -50,7 +51,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategory productCategory = new ProductCategory();
         MultipartFile file = createProductCategoryDTO.getImage();
         String fileName = file.getOriginalFilename();
-        s3Service.uploadFile(file, fileName);
+        s3Service.uploadFile(file, fileName, BUCKET_PATH);
 
         productCategory.setName(createProductCategoryDTO.getName());
         productCategory.setImage(fileName);
@@ -63,5 +64,13 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 newProductCategory.getName(),
                 newProductCategory.getImage()
         );
+    }
+
+    public boolean deleteCategory(Long id){
+
+        ProductCategory productCategory = productCategoryRepository.getReferenceById(id);
+        s3Service.deleteFile(BUCKET_PATH + productCategory.getImage());
+        productCategoryRepository.delete(productCategory);
+        return true;
     }
 }

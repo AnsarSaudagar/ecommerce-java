@@ -27,11 +27,11 @@ public class S3ServiceImpl implements S3Service {
     }
 
     @Override
-    public String uploadFile(MultipartFile file, String filePath) {
+    public String uploadFile(MultipartFile file, String filePath, String bucketPath) {
         try{
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(awsProperties.getS3Bucket())
-                    .key("category-images/" + filePath)
+                    .key(bucketPath + filePath)
                     .contentType(file.getContentType())
                     .build();
 
