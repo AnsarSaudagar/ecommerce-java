@@ -1,11 +1,9 @@
 package com.example.ecommerce.dto;
 
-import com.example.ecommerce.entity.ProductCategory;
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-
-import java.math.BigDecimal;
 
 @Data
 @AllArgsConstructor

@@ -1,13 +1,12 @@
 package com.example.ecommerce.controllers.admin;
 
+import com.example.ecommerce.dto.CreateProductCategoryDTO;
 import com.example.ecommerce.dto.ProductCategoryDto;
 import com.example.ecommerce.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,5 +25,10 @@ public class ProductCategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<ProductCategoryDto> getCategory(@PathVariable Long id){
         return ResponseEntity.ok(productCategoryService.getProductCategory(id));
+    }
+
+    @PostMapping(value = "add-product-category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> addProduct(@RequestBody CreateProductCategoryDTO createProductCategoryDTO){
+        return ResponseEntity.ok(productCategoryService.createNewCategory(createProductCategoryDTO));
     }
 }

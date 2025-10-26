@@ -1,5 +1,6 @@
 package com.example.ecommerce.service.impl;
 
+import com.example.ecommerce.dto.CreateProductCategoryDTO;
 import com.example.ecommerce.dto.ProductCategoryDto;
 import com.example.ecommerce.entity.ProductCategory;
 import com.example.ecommerce.repository.ProductCategoryRepository;
@@ -36,5 +37,10 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
                 category.getName(),
                 category.getImage()
         );
+    }
+
+    @Override
+    public Object createNewCategory(CreateProductCategoryDTO createProductCategoryDTO) {
+        return createProductCategoryDTO;
     }
 }
