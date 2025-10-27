@@ -1,5 +1,6 @@
 package com.example.ecommerce.controllers.admin;
 
+import com.example.ecommerce.dto.CreateProductDto;
 import com.example.ecommerce.dto.ProductDto;
 import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.S3Service;
@@ -29,8 +30,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.getProduct(id));
     }
 
-    public ResponseEntity<?> createProduct(){
-        return null;
+    @PostMapping()
+    public ResponseEntity<ProductDto> createProduct(@ModelAttribute CreateProductDto createProductDto){
+        return ResponseEntity.ok(productService.createNewCategory(createProductDto));
     }
 
     @GetMapping("/download")

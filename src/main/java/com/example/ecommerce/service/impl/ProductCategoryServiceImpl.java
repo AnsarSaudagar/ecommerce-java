@@ -57,7 +57,6 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         ProductCategory newProductCategory = productCategoryRepository.save(productCategory);
 
-
         return new ProductCategoryDto(
                 newProductCategory.getId(),
                 newProductCategory.getName(),

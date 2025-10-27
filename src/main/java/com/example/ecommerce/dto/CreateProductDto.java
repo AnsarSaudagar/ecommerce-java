@@ -1,13 +1,14 @@
 package com.example.ecommerce.dto;
 
+import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.math.BigDecimal;
 
+@Data
 public class CreateProductDto {
     String name;
     BigDecimal price;
-    int category;
+    Long category_id;
     String description;
-    MultipartFile img;
+    MultipartFile image;
 }
