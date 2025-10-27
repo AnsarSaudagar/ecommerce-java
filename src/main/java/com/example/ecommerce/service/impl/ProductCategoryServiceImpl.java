@@ -67,7 +67,11 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
     public boolean deleteCategory(Long id){
 
         ProductCategory productCategory = productCategoryRepository.getReferenceById(id);
-        s3Service.deleteFile(BUCKET_PATH + productCategory.getImage());
+
+        if(productCategory.getImage() != null){
+            s3Service.deleteFile(BUCKET_PATH + productCategory.getImage());
+        }
+
         productCategoryRepository.delete(productCategory);
         return true;
     }

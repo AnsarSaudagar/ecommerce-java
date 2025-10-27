@@ -32,7 +32,12 @@ public class ProductController {
 
     @PostMapping()
     public ResponseEntity<ProductDto> createProduct(@ModelAttribute CreateProductDto createProductDto){
-        return ResponseEntity.ok(productService.createNewCategory(createProductDto));
+        return ResponseEntity.ok(productService.createNewProduct(createProductDto));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Boolean> deleteProduct(@PathVariable Long id){
+        return ResponseEntity.ok(productService.deleteProduct(id));
     }
 
     @GetMapping("/download")

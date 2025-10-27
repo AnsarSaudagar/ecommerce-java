@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDto createNewCategory(CreateProductDto createProductDto) {
+    public ProductDto createNewProduct(CreateProductDto createProductDto) {
 
         Product product = new Product();
         product.setName(createProductDto.getName());
@@ -96,8 +96,18 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public boolean deleteCategory(Long id) {
-        return false;
+    public boolean deleteProduct(Long id) {
+
+        Product product = productRepository.getReferenceById(id);
+
+        System.out.println(product.getImage());
+        if(product.getImage() != null){
+            s3Service.deleteFile(BUCKET_PATH + "product_" + product.getId() + "/" + product.getImage());
+        }
+
+        productRepository.delete(product);
+
+        return true;
     }
 
 
