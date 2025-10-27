@@ -6,7 +6,6 @@ import com.example.ecommerce.entity.ProductCategory;
 import com.example.ecommerce.repository.ProductCategoryRepository;
 import com.example.ecommerce.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

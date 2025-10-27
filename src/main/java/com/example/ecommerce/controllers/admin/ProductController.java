@@ -1,7 +1,6 @@
 package com.example.ecommerce.controllers.admin;
 
-import com.example.ecommerce.dto.AdminProductDto;
-import com.example.ecommerce.dto.CreateProductCategoryDTO;
+import com.example.ecommerce.dto.ProductDto;
 import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +20,17 @@ public class ProductController {
     S3Service s3Service;
 
     @GetMapping()
-    public ResponseEntity<List<AdminProductDto>> getAllProducts(){
+    public ResponseEntity<List<ProductDto>> getAllProducts(){
         return ResponseEntity.ok(productService.getAllProductsForAdmin());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AdminProductDto> getCategory(@PathVariable Long id){
+    public ResponseEntity<ProductDto> getProduct(@PathVariable Long id){
         return ResponseEntity.ok(productService.getProduct(id));
+    }
+
+    public ResponseEntity<?> createProduct(){
+        return null;
     }
 
     @GetMapping("/download")

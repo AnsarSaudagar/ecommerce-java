@@ -7,6 +7,6 @@ import java.util.List;
 public interface ProductCategoryService {
     List<ProductCategoryDto> getAllCategories();
     ProductCategoryDto getProductCategory(Long id);
-    Object createNewCategory(CreateProductCategoryDTO createProductCategoryDTO);
+    ProductCategoryDto createNewCategory(CreateProductCategoryDTO createProductCategoryDTO);
     boolean deleteCategory(Long id);
 }

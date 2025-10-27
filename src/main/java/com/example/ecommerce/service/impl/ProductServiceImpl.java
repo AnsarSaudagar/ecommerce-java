@@ -1,16 +1,14 @@
 package com.example.ecommerce.service.impl;
 
-import com.example.ecommerce.dto.AdminProductDto;
-import com.example.ecommerce.dto.ProductCategoryDto;
+import com.example.ecommerce.dto.CreateProductDto;
+import com.example.ecommerce.dto.ProductDto;
 import com.example.ecommerce.entity.Product;
-import com.example.ecommerce.entity.ProductCategory;
 import com.example.ecommerce.repository.ProductRepository;
 import com.example.ecommerce.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -19,9 +17,9 @@ public class ProductServiceImpl implements ProductService {
     private ProductRepository productRepository;
 
     @Override
-    public List<AdminProductDto> getAllProductsForAdmin() {
+    public List<ProductDto> getAllProductsForAdmin() {
         return productRepository.findAll().stream()
-                .map(p -> new AdminProductDto(
+                .map(p -> new ProductDto(
                         p.getId(),
                         p.getName(),
                         p.getPrice(),
@@ -34,11 +32,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public AdminProductDto getProduct(Long id) {
+    public ProductDto getProduct(Long id) {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product category not found with id: " + id));
 
-        return new AdminProductDto(
+        return new ProductDto(
                 product.getId(),
                 product.getName(),
                 product.getPrice(),
@@ -47,6 +45,16 @@ public class ProductServiceImpl implements ProductService {
                 product.getProductCategory().getName(),
                 product.getProductCategory().getId()
         );
+    }
+
+    @Override
+    public ProductDto createNewCategory(CreateProductDto createProductDto) {
+        return null;
+    }
+
+    @Override
+    public boolean deleteCategory(Long id) {
+        return false;
     }
 
 
