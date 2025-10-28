@@ -2,6 +2,7 @@ package com.example.ecommerce.controllers.admin;
 
 import com.example.ecommerce.dto.CreateProductDto;
 import com.example.ecommerce.dto.ProductDto;
+import com.example.ecommerce.dto.UpdateProductDto;
 import com.example.ecommerce.service.ProductService;
 import com.example.ecommerce.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class ProductController {
     @DeleteMapping("{id}")
     public ResponseEntity<Boolean> deleteProduct(@PathVariable Long id){
         return ResponseEntity.ok(productService.deleteProduct(id));
+    }
+
+    @PutMapping("{id}")
+    public ResponseEntity<ProductDto> updateProduct(@PathVariable Long id, @ModelAttribute UpdateProductDto updateProductDto){
+        return ResponseEntity.ok(productService.updateProduct(id, updateProductDto));
     }
 
     @GetMapping("/download")
