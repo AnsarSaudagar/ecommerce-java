@@ -2,6 +2,7 @@ package com.example.ecommerce.controllers.admin;
 
 import com.example.ecommerce.dto.CreateProductCategoryDTO;
 import com.example.ecommerce.dto.ProductCategoryDto;
+import com.example.ecommerce.dto.UpdateProductCategoryDTO;
 import com.example.ecommerce.service.ProductCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,8 +29,13 @@ public class ProductCategoryController {
     }
 
     @PostMapping(value = "add-product-category", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addCategory(@ModelAttribute CreateProductCategoryDTO createProductCategoryDTO){
+    public ResponseEntity<ProductCategoryDto> addCategory(@ModelAttribute CreateProductCategoryDTO createProductCategoryDTO){
         return ResponseEntity.ok(productCategoryService.createNewCategory(createProductCategoryDTO));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ProductCategoryDto> updateCategory(@PathVariable Long id, @ModelAttribute UpdateProductCategoryDTO updateProductCategoryDTO){
+        return ResponseEntity.ok(productCategoryService.updateCategory(id, updateProductCategoryDTO));
     }
 
     @DeleteMapping(value = "/{id}")

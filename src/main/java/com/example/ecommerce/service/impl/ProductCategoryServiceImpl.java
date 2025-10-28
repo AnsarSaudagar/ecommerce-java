@@ -2,6 +2,7 @@ package com.example.ecommerce.service.impl;
 
 import com.example.ecommerce.dto.CreateProductCategoryDTO;
 import com.example.ecommerce.dto.ProductCategoryDto;
+import com.example.ecommerce.dto.UpdateProductCategoryDTO;
 import com.example.ecommerce.entity.ProductCategory;
 import com.example.ecommerce.repository.ProductCategoryRepository;
 import com.example.ecommerce.service.ProductCategoryService;
@@ -25,11 +26,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 //    @Cacheable("product-categories")
     public List<ProductCategoryDto> getAllCategories() {
         return productCategoryRepository.findAll().stream()
-                .map(pc -> new ProductCategoryDto(
-                        pc.getId(),
-                        pc.getName(),
-                        pc.getImage()
-                )).toList();
+                .map(this::convertToDto).toList();
     }
 
     @Override
@@ -37,11 +34,7 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
         ProductCategory category = productCategoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product category not found with id: " + id));
 
-        return new ProductCategoryDto(
-                category.getId(),
-                category.getName(),
-                category.getImage()
-        );
+        return convertToDto(category);
     }
 
     @Override
@@ -49,19 +42,18 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         ProductCategory productCategory = new ProductCategory();
         MultipartFile file = createProductCategoryDTO.getImage();
-        String fileName = file.getOriginalFilename();
-        s3Service.uploadFile(file, fileName, BUCKET_PATH);
+
+        if(file != null){
+            String fileName = file.getOriginalFilename();
+            s3Service.uploadFile(file, fileName, BUCKET_PATH);
+            productCategory.setImage(fileName);
+        }
 
         productCategory.setName(createProductCategoryDTO.getName());
-        productCategory.setImage(fileName);
 
         ProductCategory newProductCategory = productCategoryRepository.save(productCategory);
 
-        return new ProductCategoryDto(
-                newProductCategory.getId(),
-                newProductCategory.getName(),
-                newProductCategory.getImage()
-        );
+        return convertToDto(newProductCategory);
     }
 
     public boolean deleteCategory(Long id){
@@ -74,5 +66,34 @@ public class ProductCategoryServiceImpl implements ProductCategoryService {
 
         productCategoryRepository.delete(productCategory);
         return true;
+    }
+
+    @Override
+    public ProductCategoryDto updateCategory(Long id, UpdateProductCategoryDTO updateProductCategoryDTO) {
+
+        ProductCategory productCategory = productCategoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category Not found"));
+
+        if(updateProductCategoryDTO.getName() != null) productCategory.setName(updateProductCategoryDTO.getName());
+
+        MultipartFile file = updateProductCategoryDTO.getImage();;
+
+        if(file != null){
+            String fileName = file.getOriginalFilename();
+            productCategory.setImage(fileName);
+            s3Service.uploadFile(file, fileName, BUCKET_PATH);
+        }
+
+        productCategoryRepository.save(productCategory);
+
+        return convertToDto(productCategory);
+    }
+
+    private ProductCategoryDto convertToDto(ProductCategory productCategory){
+        return new ProductCategoryDto(
+            productCategory.getId(),
+            productCategory.getName(),
+            productCategory.getImage()
+        );
     }
 }
